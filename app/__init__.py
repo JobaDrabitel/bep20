@@ -1,10 +1,9 @@
 from flask import Flask
-
+from app.ether.etherium import ether
+from app.ether.config import  networks
 def create_app():
     app = Flask(__name__)
-
-    from app.bep20.routes import bep20
-
-    app.register_blueprint(bep20, url_prefix='/bep20')
+    app.config['networks'] = networks
+    app.register_blueprint(ether, url_prefix='')
 
     return app
