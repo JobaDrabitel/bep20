@@ -48,10 +48,10 @@ def get_balance_usdt(network, address):
     w3, error = get_w3(network)
     if error:
         return jsonify({'error': error}), 400
-
+    decimals = current_app.config['networks'][network]['decimals']
     usdt_contract = get_contract(w3, network)
     balance = usdt_contract.functions.balanceOf(address).call()
-    return jsonify({'balance': balance * 10**-18})
+    return jsonify({'balance': balance * 10**-decimals})
 
 
 @ether.route('/<network>/transfer_gas', methods=['POST'])
@@ -70,7 +70,7 @@ def transfer_bnb(network):
     tx = {
         'from': from_address,
         'to': to_address,
-        'value': Web3.to_wei(amount, 'finney'),
+        'value': Web3.to_wei(amount, 'ether'),
         'gas': current_app.config['networks'][network]['gas'],
         'gasPrice': current_app.config['networks'][network]['gasPrice'],
         'nonce': nonce,
