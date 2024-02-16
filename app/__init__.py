@@ -1,6 +1,6 @@
 from flask import Flask
 from app.ether.etherium import ether
-from app.ether.config import networks
+from app.config import networks
 from app.tron.trc20 import tron
 def create_app():
     app = Flask(__name__)

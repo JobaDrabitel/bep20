@@ -39,7 +39,7 @@ def get_balance_bnb(network, address):
     if error:
         return jsonify({'error': error}), 400
 
-    balance = w3.eth.get_balance(address)
+    balance = w3.eth.get_balance_gas(address)
     return jsonify({'balance': Web3.from_wei(balance, 'ether')})
 
 
@@ -99,7 +99,7 @@ def transfer_usdt(network):
     amount_in_wei = int(amount * (10 ** decimals))
 
     usdt_contract.functions.approve(from_address, amount_in_wei)
-    transfer_txn = usdt_contract.functions.transfer(to_address, amount_in_wei).build_transaction({
+    transfer_txn = usdt_contract.functions.transfer_gas(to_address, amount_in_wei).build_transaction({
         'chainId': w3.eth.chain_id,
         'from': from_address,
         'nonce': w3.eth.get_transaction_count(from_address),
