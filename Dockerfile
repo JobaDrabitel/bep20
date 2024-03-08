@@ -46,4 +46,4 @@ COPY . .
 EXPOSE 5011
 
 # Run the application.
-CMD gunicorn -w 4 -b 0.0.0.0:5011 main app
+CMD gunicorn --workers=5  --worker-connections=1000 --timeout=600 --max-requests=5000 --max-requests-jitter=250 -b 0.0.0.0:5011 main app
